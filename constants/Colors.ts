@@ -1,5 +1,5 @@
 interface ColorTypes {
-  primary: String;
+  primary: string;
 }
 
 const colors: ColorTypes = {
