@@ -53,3 +53,22 @@ export const insertPlace = (
     });
   });
 };
+
+export const fetchPlaces = () => {
+  return new Promise((resolve, reject) => {
+    const sqlStatement: string = 'SELECT * FROM places';
+
+    db.transaction((tx: any) => {
+      tx.executeSql(
+        sqlStatement,
+        [],
+        (_: any, result: any) => {
+          resolve(result);
+        },
+        (_: any, err: any) => {
+          reject(err);
+        }
+      );
+    });
+  });
+};
