@@ -13,7 +13,12 @@ const initialState: placesState = {
 export default (state = initialState, action: any) => {
   switch (action.type) {
     case ADD_PLACE:
-      const newPlace = new Place(new Date().toString(), action.placeData.title);
+      const newPlace = new Place(
+        new Date().toString(),
+        action.placeData.title,
+        action.placeData.image
+      );
+
       return {
         places: state.places.concat(newPlace),
       };

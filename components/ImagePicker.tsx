@@ -9,12 +9,16 @@ interface ImageObject {
   cancelled: boolean;
   height?: number;
   type?: string;
-  uri?: any;
+  uri?: string;
   width?: number;
 }
 
-const ImagePicker = () => {
-  const [pickedImage, setPickedImage] = useState();
+interface Props {
+  onImageTaken(uri: string): any;
+}
+
+const ImagePicker = (props: Props) => {
+  const [pickedImage, setPickedImage] = useState('');
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.CAMERA);
@@ -45,8 +49,9 @@ const ImagePicker = () => {
       quality: 0.5,
     });
 
-    if (!image.cancelled) {
+    if (!image.cancelled && image.uri) {
       setPickedImage(image.uri);
+      props.onImageTaken(image.uri);
     }
   };
 
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
   },
   imagePicker: {
     alignItems: 'center',
+    marginBottom: 15,
   },
   imagePreview: {
     height: 200,
