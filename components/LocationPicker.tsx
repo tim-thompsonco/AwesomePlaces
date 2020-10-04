@@ -20,7 +20,7 @@ interface Coords {
 
 const LocationPicker = (props: any) => {
   const [pickedLocation, setPickedLocation] = useState<Coords | undefined>();
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const mapPickedLocation: Coords | undefined = props.navigation.getParam(
     'pickedLocation'
@@ -55,7 +55,7 @@ const LocationPicker = (props: any) => {
   const getLocationHandler = async () => {
     setIsFetching(true);
 
-    const hasPermission = await verifyPermissions();
+    const hasPermission: boolean = await verifyPermissions();
 
     if (!hasPermission) {
       return;

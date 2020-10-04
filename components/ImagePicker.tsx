@@ -18,10 +18,13 @@ interface Props {
 }
 
 const ImagePicker = (props: Props) => {
-  const [pickedImage, setPickedImage] = useState('');
+  const [pickedImage, setPickedImage] = useState<string>('');
 
   const verifyPermissions = async () => {
-    const result = await Permissions.askAsync(Permissions.CAMERA);
+    const result = await Permissions.askAsync(
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
 
     if (result.status !== 'granted') {
       Alert.alert(
@@ -37,7 +40,7 @@ const ImagePicker = (props: Props) => {
   };
 
   const takeImageHandler = async () => {
-    const hasPermission = await verifyPermissions();
+    const hasPermission: boolean = await verifyPermissions();
 
     if (!hasPermission) {
       return;

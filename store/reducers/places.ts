@@ -13,7 +13,7 @@ const initialState: placesState = {
 export default (state = initialState, action: any) => {
   switch (action.type) {
     case ADD_PLACE:
-      const newPlace = new Place(
+      const newPlace: Place = new Place(
         action.placeData.id,
         action.placeData.title,
         action.placeData.image,
