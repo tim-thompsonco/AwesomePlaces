@@ -26,13 +26,15 @@ const LocationPicker = (props: any) => {
     'pickedLocation'
   );
 
+  const { onLocationPicked } = props;
+
   useEffect(() => {
     if (mapPickedLocation) {
       setPickedLocation(mapPickedLocation);
 
       props.onLocationPicked(mapPickedLocation);
     }
-  }, [mapPickedLocation]);
+  }, [mapPickedLocation, onLocationPicked]);
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
