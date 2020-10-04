@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Button,
@@ -21,6 +21,18 @@ interface Coords {
 const LocationPicker = (props: any) => {
   const [pickedLocation, setPickedLocation] = useState<Coords | undefined>();
   const [isFetching, setIsFetching] = useState(false);
+
+  const mapPickedLocation: Coords | undefined = props.navigation.getParam(
+    'pickedLocation'
+  );
+
+  useEffect(() => {
+    if (mapPickedLocation) {
+      setPickedLocation(mapPickedLocation);
+
+      props.onLocationPicked(mapPickedLocation);
+    }
+  }, [mapPickedLocation]);
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
@@ -53,6 +65,11 @@ const LocationPicker = (props: any) => {
       });
 
       setPickedLocation({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      });
+
+      props.onLocationPicked({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
       });
