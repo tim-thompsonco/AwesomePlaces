@@ -17,7 +17,7 @@ export default (state = initialState, action: any) => {
         action.placeData.id,
         action.placeData.title,
         action.placeData.image,
-        action.plateData.address,
+        action.placeData.address,
         action.placeData.coords.lat,
         action.placeData.coords.lng
       );
