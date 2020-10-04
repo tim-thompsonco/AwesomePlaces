@@ -6,11 +6,27 @@ import Place from '../models/place';
 import MapPreview from '../components/MapPreview';
 import Colors from '../constants/Colors';
 
+interface Coords {
+  lat: number;
+  lng: number;
+}
+
 const PlacesDetailScreen = (props: any) => {
   const placeId: string = props.navigation.getParam('placeId');
   const selectedPlace: Place = useSelector((state: any) =>
     state.places.places.find((place: Place) => place.id === placeId)
   );
+  const selectedLocation: Coords = {
+    lat: selectedPlace.lat,
+    lng: selectedPlace.lng,
+  };
+
+  const showMapHandler = () => {
+    props.navigation.navigate('Map', {
+      readonly: true,
+      initialLocation: selectedLocation,
+    });
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.viewContainer}>
@@ -21,7 +37,8 @@ const PlacesDetailScreen = (props: any) => {
         </View>
         <MapPreview
           style={styles.mapPreview}
-          location={{ lat: selectedPlace.lat, lng: selectedPlace.lng }}
+          location={selectedLocation}
+          onPress={showMapHandler}
         />
       </View>
     </ScrollView>

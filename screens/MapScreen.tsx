@@ -23,18 +23,27 @@ interface Location {
 }
 
 const MapScreen = (props: any) => {
+  const initialLocation: Location | undefined = props.navigation.getParam(
+    'initialLocation'
+  );
+  const readonly: boolean | undefined = props.navigation.getParam('readonly');
+
   const [selectedLocation, setSelectedLocation] = useState<
     Location | undefined
-  >();
+  >(initialLocation);
 
   const mapRegion: MapRegion = {
-    latitude: 37.78,
-    longitude: -122.43,
+    latitude: initialLocation ? initialLocation.lat : 37.78,
+    longitude: initialLocation ? initialLocation.lng : -122.43,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   const selectLocationHandler = (event: any) => {
+    if (readonly) {
+      return;
+    }
+
     const selectedLat: number = event.nativeEvent.coordinate.latitude;
     const selectedLng: number = event.nativeEvent.coordinate.longitude;
 
@@ -84,6 +93,11 @@ const MapScreen = (props: any) => {
 
 MapScreen.navigationOptions = (navData: any) => {
   const saveFn = navData.navigation.getParam('saveLocation');
+  const readonly: boolean | undefined = navData.navigation.getParam('readonly');
+
+  if (readonly) {
+    return {};
+  }
 
   return {
     headerRight: () => {

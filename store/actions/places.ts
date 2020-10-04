@@ -51,7 +51,7 @@ export const addPlace = (title: string, imageUrl: string, location: Coords) => {
         dispatch({
           type: ADD_PLACE,
           placeData: {
-            id: dbResult.insertId,
+            id: dbResult.insertId.toString(),
             title: title,
             image: newPath,
             address: address,
