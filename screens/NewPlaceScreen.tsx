@@ -70,7 +70,7 @@ const NewPlaceScreen = (props: any) => {
 };
 
 NewPlaceScreen.navigationOptions = {
-  headerTitle: 'Add Place',
+  headerTitle: 'Add New Place',
 };
 
 const styles = StyleSheet.create({
